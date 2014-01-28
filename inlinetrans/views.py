@@ -49,7 +49,7 @@ def set_new_translation(request):
                   'message': _('Unknow error')}
         selected_pofile = None
         msgid = smart_str(request.POST['msgid'])
-        msgstr = smart_str(request.POST['msgstr'])
+        msgstr = request.POST['msgstr']
         retry = smart_str(request.POST['retry'])
         lang = get_language()
 
