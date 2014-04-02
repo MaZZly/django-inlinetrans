@@ -23,8 +23,14 @@ from django.template.loader import render_to_string
 from django.template import TemplateSyntaxError, TokenParser, Node, Variable
 try:
     from django.template.base import _render_value_in_context
+    render_function = _render_value_in_context
 except ImportError:   # Django 1.1 fallback
-    from django.template import _render_value_in_context
+    try:
+        from django.template import _render_value_in_context
+        render_function = _render_value_in_context
+    except ImportError:
+        from django.template import Template
+        render_function = lambda s, c: Template(s).render(c)
 
 from django.utils.translation import get_language
 from django.utils.translation.trans_real import catalog
@@ -87,7 +93,7 @@ class InlineTranslateNode(Node):
         if not (user and get_user_can_translate(user)):
             self.filter_expression.var.translate = not self.noop
             output = self.filter_expression.resolve(context)
-            return _render_value_in_context(output, context)
+            return render_function(output, context)
 
         if getattr(self.filter_expression.var, 'literal'):
             msgid = self.filter_expression.var.literal
