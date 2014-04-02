@@ -88,7 +88,7 @@ def set_new_translation(request):
                     selected_pofile.metadata['Last-Translator'] = smart_str("%s %s <%s>" % (request.user.first_name, request.user.last_name, request.user.email))
                     selected_pofile.metadata['X-Translated-Using'] = smart_str("inlinetrans %s" % inlinetrans.get_version(False))
                     selected_pofile.metadata['PO-Revision-Date'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M%z')
-                except UnicodeDecodeError:
+                except (UnicodeDecodeError, AttributeError):
                     pass
                 selected_pofile.save()
                 selected_pofile.save_as_mofile(po_filename.replace('.po', '.mo'))
