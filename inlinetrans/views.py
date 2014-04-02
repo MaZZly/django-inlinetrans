@@ -113,7 +113,7 @@ def do_restart(request):
         reload_time = get_auto_reload_time()
         command = "echo no script"
         if reload_method == 'test':
-            command = 'touch %s' % os.path.join(settings.BASEDIR, 'settings.py')
+            command = 'touch "%s"' % os.path.join(settings.BASEDIR, 'settings.py')
         ## No RedHAT or similars
         elif reload_method == 'apache2':
             command = 'sudo apache2ctl restart'
