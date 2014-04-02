@@ -13,7 +13,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this programe.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+try:
+    from django.conf.urls.defaults import patterns, url
+except ImportError:
+    from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns('inlinetrans.views',
