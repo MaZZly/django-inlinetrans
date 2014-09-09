@@ -75,14 +75,14 @@
             var active_translation = false;
 
             var active_translations = function () {
-                if ($("span.inlinetransActions span.active").length && !active_translation) {
+                if ($(".inlinetransActions .active").length && !active_translation) {
                     active_translation = true;
-                    $("a > span.translatable").each(function(){
+                    $("a > .translatable").each(function(){
                         $(this).parent().click(function () {
                             return false;
                         });
                     });
-                    $("span.translatable").click(send_translation);
+                    $(".translatable").click(send_translation);
                 }
             }
 
@@ -95,17 +95,17 @@
             }
 
             var disable_translations = function () {
-                if ($("span.inlinetransActions span.active").length == 0 && active_translation) {
+                if ($(".inlinetransActions .active").length == 0 && active_translation) {
                     active_translation = false;
-                    $("span.translatable").unbind("click", send_translation);
-                    $("a > span.translatable").each(function(){
+                    $(".translatable").unbind("click", send_translation);
+                    $("a > .translatable").each(function(){
                         $(this).parent().unbind('click');
                     });
                 }
             }
 
-            $("span.hightlightTrans").click(function () {
-                $("span.translatable").toggleClass("inlinetransHighlight");
+            $(".hightlightTrans").click(function () {
+                $(".translatable").toggleClass("inlinetransHighlight");
                 $(this).toggleClass("active");
                 if ($(this).hasClass("active")) {
                     active_translations();
@@ -115,7 +115,7 @@
                 }
             });
 
-            $("span.hightlightNotrans").click(function(){
+            $(".hightlightNotrans").click(function(){
                 $(this).toggleClass("active");
                 if ($(this).hasClass("active")) {
                     active_translations();
@@ -123,14 +123,14 @@
                 else {
                     disable_translations();
                 }
-                $("span.untranslated").toggleClass("inlinetransUntranslated");
+                $(".untranslated").toggleClass("inlinetransUntranslated");
             });
 
             active_restart = function () {
-                $("span.restartServer").css({display: 'inline'});
-                $("span.restartServer").click(function(){
+                $(".restartServer").css({display: 'inline'});
+                $(".restartServer").click(function(){
                     if (some_changes){
-                        $("span.restartServer").html(messages_dict.applying_changes);
+                        $(".restartServer").html(messages_dict.applying_changes);
                         $(this).toggleClass("active");
                         active_loading();
                         $.ajax({
@@ -142,11 +142,11 @@
                                 async: true,
                                 success: function(response){
                                     some_changes = false;
-                                    $("span.restartServer").html(messages_dict.reloading);
+                                    $(".restartServer").html(messages_dict.reloading);
                                     setTimeout(function(){
                                     document.location = document.location;
-                                    $("span.restartServer").html(messages_dict.apply_changes);
-                                    $("span.restartServer").toggleClass("active");
+                                    $(".restartServer").html(messages_dict.apply_changes);
+                                    $(".restartServer").toggleClass("active");
                                     disable_loading();
                                     }, parseInt(response) * 1000);
                                 },
