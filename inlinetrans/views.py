@@ -88,7 +88,7 @@ def set_new_translation(request):
                     selected_pofile.metadata['Last-Translator'] = smart_str("%s %s <%s>" % (request.user.first_name, request.user.last_name, request.user.email))
                     selected_pofile.metadata['X-Translated-Using'] = smart_str("inlinetrans %s" % inlinetrans.get_version(False))
                     selected_pofile.metadata['PO-Revision-Date'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M%z')
-                except UnicodeDecodeError:
+                except (UnicodeDecodeError, AttributeError):
                     pass
                 selected_pofile.save()
                 selected_pofile.save_as_mofile(po_filename.replace('.po', '.mo'))
@@ -113,7 +113,7 @@ def do_restart(request):
         reload_time = get_auto_reload_time()
         command = "echo no script"
         if reload_method == 'test':
-            command = 'touch %s' % os.path.join(settings.BASEDIR, 'settings.py')
+            command = 'touch "%s"' % os.path.join(settings.BASEDIR, 'settings.py')
         ## No RedHAT or similars
         elif reload_method == 'apache2':
             command = 'sudo apache2ctl restart'
