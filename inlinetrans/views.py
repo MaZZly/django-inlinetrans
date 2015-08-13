@@ -22,7 +22,7 @@ from django.core.management.commands import makemessages
 from django.http import HttpResponseBadRequest, HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from django.utils import simplejson
+import json as simplejson
 from django.utils.encoding import smart_str
 from django.utils.translation import get_language, ugettext as _
 
