@@ -68,7 +68,8 @@ class NotTranslated(object):
 
     @staticmethod
     def ugettext(cadena):
-        raise ValueError("not translated")
+        return
+#	raise ValueError("not translated")
 
     @staticmethod
     def add_fallback(func):
